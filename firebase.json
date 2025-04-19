@@ -1,10 +1,14 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": "public",
     "rewrites": [
       {
-        "source": "**",
+        "source": "/api/**",
         "function": "api"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "ignore": [
@@ -15,9 +19,6 @@
   },
   "functions": {
     "source": "dist",
-    "runtime": "nodejs22",
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
+    "runtime": "nodejs20"
   }
 }

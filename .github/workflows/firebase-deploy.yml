@@ -10,17 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          
+
       - name: Install Dependencies
-        run: |
-          npm ci
-          npm install rimraf@5.0.1 --save-dev
-          
+        run: npm ci
+
       - name: Build
         run: npm run build
         env:
@@ -28,7 +26,7 @@ jobs:
           GEMINI_PRO_MODEL: ${{ secrets.GEMINI_PRO_MODEL }}
           GEMINI_PRO_VISION_MODEL: ${{ secrets.GEMINI_PRO_VISION_MODEL }}
           PORT: ${{ secrets.PORT }}
-          
+
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
