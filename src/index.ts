@@ -13,23 +13,10 @@ async function bootstrap() {
   );
   app.enableCors();
   await app.init();
-  return app;
 }
 
-let nestApp;
-
 bootstrap()
-  .then(app => {
-    nestApp = app;
-    console.log('NestJS app initialized');
-  })
+  .then(() => console.log('NestJS app initialized'))
   .catch(err => console.error('NestJS app initialization failed', err));
 
-export const api = functions.https.onRequest((request, response) => {
-  if (!nestApp) {
-    console.log('NestJS app not initialized yet');
-    response.status(500).send('NestJS app not initialized yet');
-    return;
-  }
-  nestApp.getHttpAdapter().getInstance()(request, response);
-});
+export const api = functions.https.onRequest(expressApp);
