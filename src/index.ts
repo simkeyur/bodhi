@@ -19,4 +19,4 @@ createNestServer(server)
     .then(v => console.log('Nest Ready'))
     .catch(err => console.error('Nest broken', err));
 
-export const api = https.onRequest(server);
+export { api } from './serverless';
