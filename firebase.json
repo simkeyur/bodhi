@@ -1,22 +1,21 @@
 {
   "hosting": {
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
     "rewrites": [
       {
         "source": "**",
         "function": "api"
       }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ]
   },
   "functions": {
     "source": "dist",
     "runtime": "nodejs22",
-    "codebase": "default",
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ]

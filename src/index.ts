@@ -1,22 +1,23 @@
-import { https } from 'firebase-functions';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import express from 'express';
+import * as functions from 'firebase-functions';
 
 const server = express();
 
-export const createNestServer = async (expressInstance: express.Express) => {
+const createNestApp = async (expressInstance: express.Express) => {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressInstance),
   );
   app.enableCors();
-  return app.init();
+  await app.init();
+  return app;
 };
 
-createNestServer(server)
-    .then(v => console.log('Nest Ready'))
-    .catch(err => console.error('Nest broken', err));
-
-export { api } from './serverless';
+export const api = functions.https.onRequest(async (request, response) => {
+  const app = await createNestApp(server);
+  const expressInstance = app.getHttpAdapter().getInstance();
+  return expressInstance(request, response);
+});

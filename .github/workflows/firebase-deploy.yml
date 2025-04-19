@@ -20,10 +20,7 @@ jobs:
         run: npm ci
         
       - name: Build
-        run: |
-          npm run build
-          cp package.json dist/
-          cp package-lock.json dist/
+        run: npm run build
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_PRO_MODEL: ${{ secrets.GEMINI_PRO_MODEL }}
@@ -33,8 +30,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting,functions
+          args: deploy --only functions,hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_PATH: ./
           PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
