@@ -19,4 +19,14 @@ bootstrap()
   .then(() => console.log('NestJS app initialized'))
   .catch(err => console.error('NestJS app initialization failed', err));
 
+// A simple test endpoint
+expressApp.post('/api/gemini/text', (req, res) => {
+  res.json({ message: 'Hello from API!' });
+});
+
+// Optional: For debugging, also respond to GET
+expressApp.get('/api/gemini/text', (req, res) => {
+  res.send('GET: Hello from API!');
+});
+
 export const api = functions.https.onRequest(expressApp);
