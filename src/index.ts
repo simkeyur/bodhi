@@ -16,8 +16,20 @@ async function bootstrap() {
   return app;
 }
 
-bootstrap()
-  .then(() => console.log('NestJS app initialized'))
-  .catch((err) => console.error('NestJS app initialization failed', err));
+let nestApp;
 
-export const api = functions.https.onRequest(expressApp);
+bootstrap()
+  .then(app => {
+    nestApp = app;
+    console.log('NestJS app initialized');
+  })
+  .catch(err => console.error('NestJS app initialization failed', err));
+
+export const api = functions.https.onRequest((request, response) => {
+  if (!nestApp) {
+    console.log('NestJS app not initialized yet');
+    response.status(500).send('NestJS app not initialized yet');
+    return;
+  }
+  nestApp.getHttpAdapter().getInstance()(request, response);
+});
