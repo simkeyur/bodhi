@@ -117,4 +117,17 @@ export class GeminiController {
       geminiKey 
     });
   }
+
+  @ApiBody({
+    description: 'Prompt to refine',
+    required: true,
+    type: GenerateTextDto,
+  })
+  @Post('refine-prompt')
+  refinePrompt(
+    @Body() dto: GenerateTextDto,
+    @GeminiKey() geminiKey: string
+  ): Promise<GenAiResponse> {
+    return this.service.refinePrompt(dto.prompt, geminiKey);
+  }
 }

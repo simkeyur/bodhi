@@ -34,6 +34,22 @@ export class GeminiService {
     return { totalTokens, text };
   }
 
+  // New method to refine a prompt.
+  async refinePrompt(prompt: string, geminiKey: string): Promise<GenAiResponse> {
+    // Create a refined prompt by adding extra instructions for the LLM.
+    const refinedInstruction = `Please transform the following rough prompt into a more detailed and expressive prompt suitable for a language model: "${prompt}".`;
+    // You may adjust the instruction as needed.
+    const contents = createContent(refinedInstruction);
+    const model = this.getModel(geminiKey);
+    const { totalTokens } = await model.countTokens({ contents });
+    this.logger.log(`Refine tokens: ${JSON.stringify(totalTokens)}`);
+    const result = await model.generateContent({ contents });
+    const response = await result.response;
+    const text = response.text();
+    this.logger.log(`Refined prompt: ${JSON.stringify(text)}`);
+    return { totalTokens, text };
+  }
+
   async generateTextFromMultiModal(
     prompt: string, 
     file: Express.Multer.File, 
