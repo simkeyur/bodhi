@@ -21,7 +21,7 @@ import { GeminiKey } from './decorators/gemini-key.decorator';
   description: 'Gemini API Key',
   required: true,
 })
-@Controller('gemini')
+@Controller('api/gemini')  // Add the /api prefix here
 export class GeminiController {
   constructor(private service: GeminiService) {}
 
