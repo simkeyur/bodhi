@@ -2,6 +2,7 @@
   "name": "nestjs-gemini-api-demo",
   "version": "0.0.1",
   "description": "",
+  "main": "dist/index.js",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -81,5 +82,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "22"
   }
 }
