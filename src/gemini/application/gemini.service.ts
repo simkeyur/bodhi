@@ -37,7 +37,7 @@ export class GeminiService {
   // New method to refine a prompt.
   async refinePrompt(prompt: string, geminiKey: string): Promise<GenAiResponse> {
     // Create a refined prompt by adding extra instructions for the LLM.
-    const refinedInstruction = `Please transform the following rough prompt into a more detailed and expressive prompt suitable for a language model: "${prompt}".`;
+    const refinedInstruction = `Rewrite the user’s idea as a clear, complete prompt a large-language model can act on. Keep intent, add context, specify role, format, constraints. Respond with the prompt only. Idea: "${prompt}".`;
     // You may adjust the instruction as needed.
     const contents = createContent(refinedInstruction);
     const model = this.getModel(geminiKey);
